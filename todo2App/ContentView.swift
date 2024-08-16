@@ -8,12 +8,23 @@
 import SwiftUI
 
 struct ContentView: View {
+    @ObservedObject var userData = UserData()
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        NavigationView {
+            List {
+                ForEach(userData.tasks) { task in
+                    Button(action: {
+                        self.userData.tasks[0].checked.toggle()
+                    })
+                    {
+                        ListRow(task: task.title, isCheck: task.checked)
+                    }
+                }
+                Text("+")
+                    .font(.title)
+}
+            .navigationBarTitle(Text("Tasks"))
+            .navigationBarItems(trailing: Text("Delete"))
         }
         .padding()
     }
